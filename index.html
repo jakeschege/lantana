@@ -419,17 +419,28 @@
       display: block;
     }
     .qc-stay-card__specs {
-      display: grid; grid-template-columns: repeat(3, auto);
-      justify-content: start; gap: 1.5rem;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
       margin-top: auto; padding-top: 1rem;
       border-top: var(--qc-hairline);
-      align-items: end;
+      align-items: start;
+    }
+    .qc-stay-card__specs > div {
+      display: grid;
+      align-content: start;
+      gap: 0.2rem;
+      min-width: 0;
     }
     .qc-stay-card__specs dt {
       font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.2em;
       color: var(--qc-color-ink-dim); margin-bottom: 0.2rem;
     }
-    .qc-stay-card__specs dd { margin: 0; font-weight: 600; font-size: 0.9rem; }
+    .qc-stay-card__specs dd {
+      margin: 0;
+      font-weight: 600;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
 
     /* ---------- Gallery filmstrip ---------- */
     .qc-gallery { max-width: none; }
@@ -518,6 +529,24 @@
     .qc-mission-card .qc-button--ghost {
       margin-top: auto;
       align-self: flex-start;
+    }
+    .qc-expeditions__footnote {
+      margin-top: clamp(1.5rem, 3vw, 2.25rem);
+      padding-top: 1rem;
+      max-width: 42rem;
+      border-top: var(--qc-hairline);
+      color: var(--qc-color-ink-dim);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .qc-expeditions__footnote-label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--qc-color-accent);
     }
 
     /* ---------- Good to know ---------- */
@@ -1067,7 +1096,7 @@
               Check-in 12pm · check-out 10am.
             </p>
             <dl class="qc-stay-card__specs">
-              <div><dt>Sleeps</dt><dd>[capacity — confirm]</dd></div>
+              <div><dt>Sleeps</dt><dd>Up to 4</dd></div>
               <div><dt>Type</dt><dd>Private unit</dd></div>
               <div><dt>Dining</dt><dd>Home-style available</dd></div>
             </dl>
@@ -1094,7 +1123,7 @@
               steps away from guided nature excursions into the foothills.
             </p>
             <dl class="qc-stay-card__specs">
-              <div><dt>Sleeps</dt><dd>[capacity — confirm]</dd></div>
+              <div><dt>Sleeps</dt><dd>Up to 4</dd></div>
               <div><dt>Type</dt><dd>Private unit</dd></div>
               <div><dt>Dining</dt><dd>Home-style available</dd></div>
             </dl>
@@ -1239,7 +1268,8 @@
 
       </ul>
       <p class="qc-expeditions__footnote">
-        Trade / travel-agent partners: agent-facing property information available on request.
+        <span class="qc-expeditions__footnote-label">For travel advisors</span>
+        Property fact sheets and agent information are available on request for trade and travel-agent partners.
       </p>
     </section>
 
