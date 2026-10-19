@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lantana Homestay Cabins — Foothills of Mount Kenya, Naromoru</title>
+  <meta name="description" content="A peaceful homestay near the foothills of Mount Kenya in Naromoru. Cozy cabins, warm hospitality, home-style dining, and guided nature excursions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- PASS 3: Google Fonts — Syne (display) + Inter (body) -->
+  <style>
+    /* ==========================================================
+       LANTANA HOMESTAY CABINS — "The Quiet Frontier"
+       Pass 2: CSS
+       ========================================================== */
+
+    /* ---------- Design tokens ---------- */
+    :root {
+      --qc-color-base: #0c120e;
+      --qc-color-base-raised: #121a15;
+      --qc-color-ink: #e9f2ea;
+      --qc-color-ink-dim: rgba(233, 242, 234, 0.68);
+      --qc-color-accent: #9ef0a0;
+      --qc-color-gold: #d4b96a;
+
+      --qc-glass-bg: rgba(158, 240, 160, 0.05);
+      --qc-glass-border: rgba(158, 240, 160, 0.22);
+      --qc-glow: 0 0 24px rgba(158, 240, 160, 0.12);
+
+      --qc-font-display: 'Syne', sans-serif;
+      --qc-font-body: 'Inter', sans-serif;
+
+      --qc-space-xs: 0.5rem;
+      --qc-space-sm: 1rem;
+      --qc-space-md: 2rem;
+      --qc-space-lg: 4rem;
+      --qc-space-xl: clamp(5rem, 12vw, 10rem);
+      --qc-max-width: 72rem;
+      --qc-radius: 1.25rem;
+      --qc-radius-pill: 999px;
+      --qc-hairline: 1px solid var(--qc-glass-border);
+      --qc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --qc-speed: 0.6s;
+    }
+
+    /* ---------- Reset & base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    * { margin: 0; }
+    [hidden] { display: none !important; }
+    /* Placeholder-state: asset filenames pending (Pass 5) — suppress broken-image
+       chrome; the cycling logic still runs and will render once src values land. */
+    img[src=''] { visibility: hidden; }
+    html { scroll-behavior: smooth; }
+    body {
+      background:
+        radial-gradient(rgba(158, 240, 160, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(158, 240, 160, 0.03) 1px, transparent 1px),
+        var(--qc-color-base);
+      background-size: 26px 26px, 26px 26px, auto;
+      color: var(--qc-color-ink);
+      font-family: var(--qc-font-body);
+      font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* legacy fallback */
+      overflow-x: clip;   /* avoids creating a stray scroll container where supported */
+    }
+    /* Sticky-header offset so anchor jumps don't bury section headings */
+    [id] { scroll-margin-top: 6.5rem; }
+    img, video { display: block; max-width: 100%; height: auto; }
+    a { color: var(--qc-color-accent); text-decoration: none; }
+    ::selection { background: var(--qc-color-accent); color: var(--qc-color-base); }
+    :focus-visible {
+      outline: 2px solid var(--qc-color-gold);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    section { padding-inline: clamp(1.25rem, 5vw, 3rem); margin-block: var(--qc-space-xl); }
+    h1, h2, h3 {
+      font-family: var(--qc-font-display);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      font-weight: 700;
+      overflow-wrap: break-word;
+    }
+
+    /* ---------- Aurora blobs (fixed ambient light) ---------- */
+    .qc-aurora {
+      position: fixed;
+      inset: auto auto auto auto;
+      width: 55vmax;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.14;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .qc-aurora--1 {
+      background: radial-gradient(circle, #9ef0a0 0%, transparent 70%);
+      top: -18vmax; left: -14vmax;
+      animation: qc-drift-a 42s ease-in-out infinite alternate;
+    }
+    .qc-aurora--2 {
+      background: radial-gradient(circle, #2c4a38 0%, transparent 70%);
+      bottom: -20vmax; right: -16vmax;
+      opacity: 0.28;
+      animation: qc-drift-b 56s ease-in-out infinite alternate;
+    }
+    .qc-aurora--3 {
+      background: radial-gradient(circle, #d4b96a 0%, transparent 72%);
+      top: 46%; right: 8vw;
+      opacity: 0.07;
+      animation: qc-drift-a 64s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes qc-drift-a {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to   { transform: translate3d(8vw, 6vh, 0) scale(1.15); }
+    }
+    @keyframes qc-drift-b {
+      from { transform: translate3d(0, 0, 0) scale(1.1); }
+      to   { transform: translate3d(-7vw, -8vh, 0) scale(0.92); }
+    }
+
+    header, main > section, footer { position: relative; z-index: 1; }
+
+    /* ---------- Shared utilities ---------- */
+    .qc-skip-link {
+      position: absolute; left: 1rem; top: -4rem;
+      background: var(--qc-color-accent); color: var(--qc-color-base);
+      padding: 0.6rem 1.2rem; border-radius: var(--qc-radius-pill);
+      font-weight: 600; z-index: 100; transition: top 0.2s var(--qc-ease);
+    }
+    .qc-skip-link:focus { top: 1rem; }
+
+    .qc-glass {
+      background: var(--qc-glass-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: var(--qc-hairline);
+      border-radius: var(--qc-radius);
+      box-shadow: var(--qc-glow);
+    }
+
+    .qc-section-kicker {
+      font-family: var(--qc-font-display);
+      font-size: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem);
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: var(--qc-color-gold);
+      margin-bottom: var(--qc-space-sm);
+    }
+    .qc-section-title {
+      font-size: clamp(1.9rem, 1.2rem + 3.4vw, 3.6rem);
+      margin-bottom: var(--qc-space-sm);
+    }
+    .qc-section-lede {
+      color: var(--qc-color-ink-dim);
+      max-width: 44ch;
+      margin-bottom: var(--qc-space-lg);
+    }
+
+    .qc-button {
+      display: inline-flex; align-items: center; gap: 0.5em;
+      font-family: var(--qc-font-display); font-weight: 600;
+      font-size: clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+      padding: 0.85em 1.6em;
+      border: var(--qc-hairline); border-radius: var(--qc-radius-pill);
+      cursor: pointer;
+      transition: transform 0.25s var(--qc-ease), box-shadow 0.25s var(--qc-ease),
+        background-color 0.25s var(--qc-ease), color 0.25s var(--qc-ease);
+    }
+    .qc-button:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(158, 240, 160, 0.22); }
+    .qc-button--accent { background: var(--qc-color-accent); color: var(--qc-color-base); border-color: transparent; }
+    .qc-button--gold { background: var(--qc-color-gold); color: #17130a; border-color: transparent; }
+    .qc-button--ghost { background: transparent; color: var(--qc-color-accent); }
+    .qc-button--ghost:hover { background: rgba(158, 240, 160, 0.08); }
+    .qc-button__arrow { transition: transform 0.25s var(--qc-ease); display: inline-block; }
+    .qc-button:hover .qc-button__arrow { transform: translateX(4px); }
+
+    /* ---------- Header / nav ---------- */
+    .qc-header {
+      position: sticky; top: 0; z-index: 50;
+      padding-inline: clamp(1.25rem, 5vw, 3rem);
+      background: rgba(12, 18, 14, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: var(--qc-hairline);
+    }
+    .qc-nav {
+      max-width: var(--qc-max-width); margin-inline: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 4.25rem; gap: var(--qc-space-md);
+    }
+    .qc-nav__logo { display: flex; align-items: center; gap: 0.75rem; color: var(--qc-color-ink); }
+    .qc-nav__logo-img { width: 40px; height: 40px; object-fit: contain; }
+    .qc-nav__wordmark {
+      font-family: var(--qc-font-display); font-weight: 700;
+      font-size: 1.15rem; line-height: 1.05; display: flex; flex-direction: column;
+    }
+    .qc-nav__wordmark-sub {
+      font-family: var(--qc-font-body); font-weight: 500;
+      font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.24em;
+      color: var(--qc-color-ink-dim);
+    }
+    .qc-nav__menu {
+      display: flex; align-items: center; gap: clamp(1rem, 3vw, 2rem); list-style: none;
+      margin: 0; padding: 0;
+    }
+    .qc-nav__link {
+      color: var(--qc-color-ink-dim);
+      font-size: 0.9rem; letter-spacing: 0.04em;
+      transition: color 0.2s var(--qc-ease);
+    }
+    .qc-nav__link:hover { color: var(--qc-color-accent); }
+    .qc-nav__toggle { display: none; }
+
+    /* ---------- Hero ---------- */
+    .qc-hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: center;
+      margin-block: 0;
+      padding-bottom: 8rem;
+    }
+    .qc-hero__video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: -2;
+    }
+    .qc-hero__scrim {
+      position: absolute; inset: 0; z-index: -1;
+      background:
+        linear-gradient(to bottom, rgba(12,18,14,0.55) 0%, rgba(12,18,14,0.35) 40%, var(--qc-color-base) 100%),
+        radial-gradient(120% 90% at 20% 80%, rgba(12,18,14,0.75), transparent 60%);
+    }
+    .qc-hero__content { max-width: var(--qc-max-width); margin-inline: auto; width: 100%; }
+    .qc-hero__kicker {
+      font-size: clamp(0.7rem, 0.65rem + 0.2vw, 0.85rem);
+      text-transform: uppercase; letter-spacing: 0.32em;
+      color: var(--qc-color-gold); margin-bottom: var(--qc-space-md);
+    }
+    .qc-hero__headline {
+      font-size: clamp(2.8rem, 1.5rem + 7vw, 6.8rem);
+      text-wrap: balance;
+      margin-bottom: var(--qc-space-md);
+    }
+    .qc-hero__lede {
+      color: var(--qc-color-ink-dim);
+      font-size: clamp(1.05rem, 1rem + 0.5vw, 1.35rem);
+      max-width: 42ch;
+      margin-bottom: var(--qc-space-lg);
+    }
+    .qc-hero__booking {
+      display: flex; align-items: flex-end; flex-wrap: wrap; gap: var(--qc-space-sm);
+      max-width: var(--qc-max-width);
+      margin-inline: auto; width: calc(100% - 2 * clamp(1.25rem, 5vw, 3rem));
+      padding: var(--qc-space-sm) var(--qc-space-md);
+    }
+    .qc-booking__field {
+      display: flex; flex-direction: column; gap: 0.3rem;
+      flex: 1 1 10rem;
+    }
+    .qc-booking__label {
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.22em;
+      color: var(--qc-color-ink-dim);
+    }
+    .qc-booking__input {
+      background: rgba(12, 18, 14, 0.45);
+      border: var(--qc-hairline); border-radius: 0.75rem;
+      color: var(--qc-color-ink);
+      font-family: inherit; font-size: 0.95rem;
+      padding: 0.65em 0.9em;
+      width: 100%;
+      color-scheme: dark;
+    }
+    .qc-booking__submit { flex: 0 0 auto; }
+
+    /* ---------- Story / altitude timeline ---------- */
+    .qc-story {
+      display: grid;
+      grid-template-columns: minmax(6rem, 1fr) minmax(0, 2.2fr);
+      gap: clamp(2rem, 6vw, 5rem);
+      max-width: var(--qc-max-width); margin-inline: auto; width: 100%;
+    }
+    /* Vertical ascent line with glowing node dots (pseudo-elements) */
+    .qc-story__track {
+      position: relative;
+      display: flex; justify-content: center;
+    }
+    .qc-story__line {
+      position: relative;
+      display: flex; flex-direction: column; justify-content: space-between;
+      align-items: flex-start;
+      gap: clamp(3rem, 8vh, 6rem);
+      padding-left: 2rem;
+      min-height: 100%;
+    }
+    .qc-story__line::before {
+      content: '';
+      position: absolute; left: 0.4375rem; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to top,
+        var(--qc-color-base) 0%,
+        rgba(158, 240, 160, 0.25) 20%,
+        var(--qc-color-accent) 55%,
+        var(--qc-color-gold) 100%);
+      opacity: 0.75;
+    }
+    .qc-story__waypoint {
+      position: relative;
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--qc-color-ink-dim);
+      display: grid; gap: 0.15rem;
+    }
+    .qc-story__waypoint::before {
+      content: '';
+      position: absolute; left: calc(-2rem + 0.4375rem - 4px); top: 0.3em;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--qc-color-base-raised);
+      border: 2px solid rgba(158, 240, 160, 0.35);
+    }
+    .qc-story__waypoint--active { color: var(--qc-color-ink); }
+    .qc-story__waypoint--active::before {
+      background: var(--qc-color-accent);
+      border-color: var(--qc-color-accent);
+      box-shadow: 0 0 12px var(--qc-color-accent), 0 0 28px rgba(158, 240, 160, 0.5);
+    }
+    .qc-story__waypoint--summit::before { border-color: rgba(212, 185, 106, 0.5); }
+    /* JS-driven scroll progress (Pass 4): --qc-altitude-progress set on the line.
+       Overrides the static gradient height; capped to 100%. */
+    .qc-story__line::before {
+      bottom: auto;
+      height: calc(100% * min(var(--qc-altitude-progress, 1), 1));
+      transition: height 0.15s linear;
+    }
+
+    .qc-story__alt {
+      font-family: var(--qc-font-display); font-weight: 700;
+      color: inherit;
+      display: block;
+    }
+    .qc-story__copy p + p { margin-top: var(--qc-space-sm); }
+    .qc-story__para { color: var(--qc-color-ink-dim); max-width: 56ch; }
+    .qc-story__stats {
+      display: flex; flex-wrap: wrap; gap: var(--qc-space-md);
+      margin-top: var(--qc-space-lg);
+      padding-top: var(--qc-space-md);
+      border-top: var(--qc-hairline);
+    }
+    .qc-story__stat dt {
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.22em;
+      color: var(--qc-color-gold); margin-bottom: 0.25rem;
+    }
+    .qc-story__stat dd {
+      font-family: var(--qc-font-display); font-weight: 600;
+      font-size: clamp(1.05rem, 1rem + 0.4vw, 1.35rem);
+      margin: 0;
+    }
+
+    /* ---------- Stays ---------- */
+    .qc-stays { max-width: var(--qc-max-width); margin-inline: auto; width: 100%; }
+    .qc-stays__grid {
+      list-style: none; margin: 0; padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--qc-space-md);
+    }
+    .qc-stay-card {
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      height: 100%;
+      transition: transform 0.4s var(--qc-ease), box-shadow 0.4s var(--qc-ease);
+    }
+    .qc-stay-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 48px rgba(158, 240, 160, 0.18);
+    }
+    .qc-stay-card__media {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      min-height: 14rem;
+    }
+    .qc-stay-card__photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s var(--qc-ease), transform 1.2s var(--qc-ease);
+      transform: scale(1.04);
+    }
+    .qc-stay-card__photo.is-active { opacity: 1; transform: scale(1); }
+    .qc-stay-card__cycle-hint {
+      position: absolute; bottom: 0.75rem; right: 0.75rem;
+      font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em;
+      color: rgba(233, 242, 234, 0.85);
+      background: rgba(12, 18, 14, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: var(--qc-hairline); border-radius: var(--qc-radius-pill);
+      padding: 0.35em 0.9em;
+      pointer-events: none;
+    }
+    .qc-stay-card__body {
+      padding: clamp(1.25rem, 3vw, 2rem); display: flex; flex-direction: column; gap: 0.6rem;
+      flex: 1 1 auto;
+    }
+    .qc-stay-card__name { font-size: clamp(1.4rem, 1.2rem + 1vw, 1.9rem); }
+    .qc-stay-card__tag {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.22em;
+      color: var(--qc-color-gold);
+      min-height: 1.2rem;
+    }
+    .qc-stay-card__desc {
+      color: var(--qc-color-ink-dim); font-size: 0.95rem;
+      min-height: 7.25rem;
+      display: block;
+    }
+    .qc-stay-card__specs {
+      display: grid; grid-template-columns: repeat(3, auto);
+      justify-content: start; gap: 1.5rem;
+      margin-top: auto; padding-top: 1rem;
+      border-top: var(--qc-hairline);
+      align-items: end;
+    }
+    .qc-stay-card__specs dt {
+      font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.2em;
+      color: var(--qc-color-ink-dim); margin-bottom: 0.2rem;
+    }
+    .qc-stay-card__specs dd { margin: 0; font-weight: 600; font-size: 0.9rem; }
+
+    /* ---------- Gallery filmstrip ---------- */
+    .qc-gallery { max-width: none; }
+    .qc-gallery__head {
+      max-width: var(--qc-max-width); margin-inline: auto;
+      width: 100%;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+    }
+    .qc-gallery__hint {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.24em;
+      color: var(--qc-color-ink-dim); white-space: nowrap;
+    }
+    .qc-gallery__strip {
+      list-style: none; margin: var(--qc-space-lg) 0 0; padding: 0.5rem max(calc((100% - var(--qc-max-width)) / 2), clamp(1.25rem, 5vw, 3rem)) 1.5rem;
+      display: flex; gap: var(--qc-space-sm);
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      cursor: grab;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(158, 240, 160, 0.35) transparent;
+    }
+    .qc-gallery__strip.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+    .qc-gallery__item {
+      flex: 0 0 clamp(16rem, 30vw, 26rem);
+      scroll-snap-align: center;
+      border-radius: var(--qc-radius);
+      overflow: hidden;
+      border: var(--qc-hairline);
+      box-shadow: var(--qc-glow);
+    }
+    .qc-gallery__item img {
+      width: 100%; height: clamp(11rem, 22vw, 17rem); object-fit: cover;
+      transition: transform 0.6s var(--qc-ease);
+    }
+    .qc-gallery__item:hover img { transform: scale(1.05); }
+
+    /* ---------- Expeditions / mission cards ---------- */
+    .qc-expeditions { max-width: var(--qc-max-width); margin-inline: auto; width: 100%; }
+    .qc-missions__grid {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+      gap: var(--qc-space-md);
+    }
+    .qc-mission-card {
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      display: flex;
+      height: 100%;
+    }
+    .qc-mission-card article {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .qc-mission-card__head {
+      display: flex; flex-direction: column-reverse; gap: 0.4rem;
+      margin-bottom: var(--qc-space-sm);
+      padding-bottom: var(--qc-space-sm);
+      border-bottom: var(--qc-hairline);
+    }
+    .qc-mission-card__code {
+      font-family: var(--qc-font-display); font-size: 0.72rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--qc-color-gold);
+    }
+    .qc-mission-card__name { font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.6rem); }
+    .qc-mission-card__brief {
+      color: var(--qc-color-ink-dim); font-size: 0.95rem;
+      margin-bottom: var(--qc-space-md);
+      flex: 1 1 auto;
+    }
+    .qc-mission-card__stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .qc-mission-card__stats dt {
+      font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.2em;
+      color: var(--qc-color-ink-dim); margin-bottom: 0.2rem;
+    }
+    .qc-mission-card__stats dd { margin: 0; font-weight: 600; font-size: 0.92rem; color: var(--qc-color-accent); }
+    .qc-mission-card__note {
+      font-size: 0.78rem; color: var(--qc-color-ink-dim); font-style: italic;
+      margin-bottom: var(--qc-space-md);
+      min-height: 2.5rem;
+    }
+    .qc-mission-card .qc-button--ghost {
+      margin-top: auto;
+      align-self: flex-start;
+    }
+
+    /* ---------- Good to know ---------- */
+    .qc-know { max-width: var(--qc-max-width); margin-inline: auto; width: 100%; }
+    .qc-know__grid {
+      list-style: none; margin: var(--qc-space-lg) 0 0; padding: 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: var(--qc-space-sm);
+    }
+    .qc-know-panel { padding: clamp(1.25rem, 2.5vw, 1.75rem); }
+    .qc-know-panel__title {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.26em;
+      color: var(--qc-color-gold); font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .qc-know-panel__value {
+      font-family: var(--qc-font-display); font-weight: 700;
+      font-size: clamp(1.6rem, 1.4rem + 1vw, 2.2rem);
+      color: var(--qc-color-accent);
+      margin-bottom: 0.4rem;
+    }
+    .qc-know-panel__note { font-size: 0.88rem; color: var(--qc-color-ink-dim); }
+
+    /* ---------- Enquire / form ---------- */
+    .qc-enquire { max-width: var(--qc-max-width); margin-inline: auto; width: 100%; }
+    .qc-form {
+      padding: clamp(1.5rem, 4vw, 2.75rem);
+      display: flex; flex-direction: column; gap: var(--qc-space-md);
+    }
+    .qc-form__row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      gap: var(--qc-space-md);
+    }
+    .qc-form__field { display: flex; flex-direction: column; gap: 0.35rem; }
+    .qc-form__label {
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;
+      color: var(--qc-color-ink-dim);
+    }
+    .qc-form__input {
+      background: rgba(12, 18, 14, 0.45);
+      border: var(--qc-hairline); border-radius: 0.75rem;
+      color: var(--qc-color-ink);
+      font-family: inherit; font-size: 1rem;
+      padding: 0.8em 1em;
+      color-scheme: dark;
+      transition: border-color 0.2s var(--qc-ease), box-shadow 0.2s var(--qc-ease);
+    }
+    .qc-form__input:focus-visible {
+      outline: none;
+      border-color: var(--qc-color-accent);
+      box-shadow: 0 0 0 3px rgba(158, 240, 160, 0.18);
+    }
+    .qc-form__textarea { resize: vertical; min-height: 8rem; }
+    .qc-form__submit { align-self: flex-start; }
+    .qc-form__status {
+      margin: 0; padding: 0.9em 1.2em;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+    }
+    .qc-form__status--success {
+      background: rgba(158, 240, 160, 0.12);
+      border: 1px solid rgba(158, 240, 160, 0.45);
+      color: var(--qc-color-accent);
+    }
+    .qc-form__status--error {
+      background: rgba(212, 185, 106, 0.12);
+      border: 1px solid rgba(212, 185, 106, 0.5);
+      color: var(--qc-color-gold);
+    }
+    .qc-enquire__backup {
+      margin-top: var(--qc-space-md);
+      padding: clamp(1.25rem, 3vw, 2rem);
+    }
+    .qc-enquire__backup-title {
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.26em;
+      color: var(--qc-color-gold); font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .qc-enquire__backup p { color: var(--qc-color-ink-dim); font-size: 0.92rem; }
+    .qc-enquire__email-wrap {
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+      margin-block: 0.75rem;
+    }
+    .qc-enquire__email {
+      font-family: var(--qc-font-display); font-weight: 600;
+      font-size: clamp(1rem, 0.95rem + 0.4vw, 1.25rem);
+      color: var(--qc-color-ink);
+      text-decoration: underline;
+      text-decoration-color: rgba(158, 240, 160, 0.5);
+      text-underline-offset: 4px;
+    }
+    .qc-copy-btn {
+      background: transparent;
+      border: var(--qc-hairline); border-radius: var(--qc-radius-pill);
+      color: var(--qc-color-accent);
+      font-family: var(--qc-font-display); font-size: 0.72rem;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 0.5em 1.2em; cursor: pointer;
+      transition: background-color 0.2s var(--qc-ease), transform 0.2s var(--qc-ease);
+    }
+    .qc-copy-btn:hover { background: rgba(158, 240, 160, 0.08); transform: translateY(-1px); }
+
+    /* ---------- Footer ---------- */
+    .qc-footer {
+      margin-top: var(--qc-space-xl);
+      padding: var(--qc-space-lg) clamp(1.25rem, 5vw, 3rem) var(--qc-space-md);
+      border-top: var(--qc-hairline);
+      background: linear-gradient(to bottom, transparent, rgba(158, 240, 160, 0.03));
+    }
+    .qc-footer__top, .qc-footer__bottom {
+      max-width: var(--qc-max-width); margin-inline: auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--qc-space-sm); flex-wrap: wrap;
+    }
+    .qc-footer__bottom { border-top: var(--qc-hairline); margin-top: var(--qc-space-md); padding-top: var(--qc-space-md); }
+    .qc-footer__brand {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: var(--qc-font-display); font-weight: 700;
+    }
+    .qc-footer__logo { width: 32px; height: 32px; object-fit: contain; }
+    .qc-footer__tag { color: var(--qc-color-ink-dim); font-size: 0.88rem; }
+    .qc-footer__links {
+      display: flex; align-items: center; gap: var(--qc-space-md); flex-wrap: wrap;
+      font-size: 0.85rem; color: var(--qc-color-ink-dim);
+    }
+    .qc-footer__link:hover { color: var(--qc-color-accent); }
+    .qc-footer__soon {
+      font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--qc-color-gold); opacity: 0.8;
+    }
+    .qc-footer__legal { font-size: 0.78rem; color: var(--qc-color-ink-dim); }
+
+    /* ---------- Scroll reveal (JS toggles .reveal-visible) ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity var(--qc-speed) var(--qc-ease),
+        transform var(--qc-speed) var(--qc-ease);
+      transition-delay: var(--qc-reveal-delay, 0s);
+      will-change: opacity, transform;
+    }
+    .reveal-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================
+       SCROLL-DRIVEN ANIMATION ENHANCEMENT
+       Only applied where `animation-timeline: view()` is supported.
+       The JS IntersectionObserver fallback handles everything else,
+       so these rules only enhance. Do not extend beyond @supports.
+       ========================================================== */
+    @supports (animation-timeline: view()) {
+      .reveal {
+        animation: qc-scroll-reveal both ease-out;
+        animation-timeline: view();
+        animation-range: entry 5% cover 22%;
+        transition: none; /* hand control from JS transitions to the timeline */
+      }
+      @keyframes qc-scroll-reveal {
+        from { opacity: 0; transform: translateY(28px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      /* Altitude line fills as it travels through the viewport */
+      .qc-story__line::before {
+        scale: 1 0.35;
+        transform-origin: bottom;
+        animation: qc-altitude-fill both linear;
+        animation-timeline: view();
+        animation-range: entry 0% cover 60%;
+      }
+      @keyframes qc-altitude-fill {
+        from { scale: 1 0.35; }
+        to   { scale: 1 1; }
+      }
+    }
+
+    /* ==========================================================
+       RESPONSIVE — single column below ~768px
+       ========================================================== */
+    @media (max-width: 768px) {
+      /* Mobile nav: hamburger toggle + slide-down menu */
+      .qc-nav__toggle {
+        display: inline-flex; flex-direction: column; justify-content: center; gap: 6px;
+        width: 2.75rem; height: 2.75rem;
+        background: transparent; cursor: pointer;
+        border: var(--qc-hairline); border-radius: 0.75rem;
+        padding: 0.75rem;
+      }
+      .qc-nav__toggle-bar,
+      .qc-nav__toggle-bar::before,
+      .qc-nav__toggle-bar::after {
+        content: '';
+        display: block;
+        height: 2px; width: 100%;
+        background: var(--qc-color-accent);
+        border-radius: 2px;
+        transition: transform 0.25s var(--qc-ease), opacity 0.25s var(--qc-ease);
+      }
+      .qc-nav__toggle-bar::before { transform: translateY(-7px); }
+      .qc-nav__toggle-bar::after { transform: translateY(5px); }
+      .qc-nav__toggle[aria-expanded='true'] .qc-nav__toggle-bar { background: transparent; }
+      .qc-nav__toggle[aria-expanded='true'] .qc-nav__toggle-bar::before { transform: translateY(-1px) rotate(45deg); }
+      .qc-nav__toggle[aria-expanded='true'] .qc-nav__toggle-bar::after { transform: translateY(-1px) rotate(-45deg); }
+
+      .qc-nav__menu {
+        position: fixed; inset: 4.25rem 1rem auto 1rem;
+        flex-direction: column; align-items: stretch; text-align: center;
+        gap: 0;
+        background: rgba(12, 18, 14, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: var(--qc-hairline); border-radius: var(--qc-radius);
+        box-shadow: var(--qc-glow), 0 24px 64px rgba(0, 0, 0, 0.5);
+        padding: var(--qc-space-sm);
+        z-index: 60;
+
+        opacity: 0; visibility: hidden; transform: translateY(-12px);
+        transition: opacity 0.3s var(--qc-ease), transform 0.3s var(--qc-ease),
+          visibility 0s linear 0.3s;
+      }
+      .qc-nav__menu.is-open {
+        opacity: 1; visibility: visible; transform: translateY(0);
+        transition-delay: 0s;
+      }
+      .qc-nav__menu li + li { border-top: var(--qc-hairline); }
+      .qc-nav__link, .qc-nav__cta { display: block; padding: 0.9rem 1rem; }
+
+      /* Collapse story timeline to a compact top rail */
+      .qc-story { grid-template-columns: 1fr; }
+      .qc-story__track { order: -1; max-height: 12rem; overflow: hidden; }
+
+      /* Stays stack naturally */
+      .qc-stays__grid { grid-template-columns: 1fr; }
+
+      /* Gallery: native horizontal scroll with mandatory snap */
+      .qc-gallery__strip {
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+      .qc-gallery__item { flex-basis: min(82vw, 22rem); }
+
+      .qc-hero__booking { position: static; width: 100%; }
+    }
+
+    /* ==========================================================
+       REDUCED MOTION
+       Single source of truth for all motion preferences.
+       Everything animated anywhere on the page is handled here.
+       ========================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      /* Aurora blobs: static, dimmed */
+      .qc-aurora,
+      .qc-aurora--1,
+      .qc-aurora--2,
+      .qc-aurora--3 {
+        animation: none !important;
+        opacity: 0.06 !important;
+      }
+
+      /* Kill all transitions & keyframe animations globally */
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      /* Reveal elements: fully visible immediately, no transform */
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+      }
+
+      /* Scroll-driven enhancements are animations — also neutralize the line fill */
+      @supports (animation-timeline: view()) {
+        .reveal, .qc-story__line::before { animation: none !important; }
+        .qc-story__line::before { scale: none; }
+      }
+    }
+
+
+
+
+
+
+
+
+
+    /* ==========================================================
+       REFERENCE-LED VISUAL PASS
+       Warm editorial hospitality, adapted from Close The Gap's
+       pine / cream / coral system without changing page behavior.
+       ========================================================== */
+    :root {
+      --qc-color-base: #fff8ed;
+      --qc-color-base-raised: #f3eadb;
+      --qc-color-ink: #123b34;
+      --qc-color-ink-dim: rgba(18, 59, 52, 0.7);
+      --qc-color-accent: #ef705f;
+      --qc-color-gold: #d59a3c;
+      --qc-glass-bg: rgba(255, 255, 255, 0.74);
+      --qc-glass-border: rgba(18, 59, 52, 0.15);
+      --qc-glow: 0 18px 45px rgba(18, 59, 52, 0.09);
+      --qc-font-display: 'Poppins', sans-serif;
+      --qc-font-body: 'Poppins', sans-serif;
+      --qc-radius: 1.35rem;
+      --qc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 8% 7%, rgba(239, 112, 95, 0.1), transparent 23rem),
+        radial-gradient(circle at 92% 30%, rgba(213, 154, 60, 0.11), transparent 26rem),
+        var(--qc-color-base);
+      color: var(--qc-color-ink);
+      font-size: clamp(0.98rem, 0.94rem + 0.22vw, 1.1rem);
+    }
+
+    ::selection { background: var(--qc-color-accent); color: #fff8ed; }
+    a { color: var(--qc-color-ink); }
+    .qc-aurora { opacity: 0.08; filter: blur(110px); }
+    .qc-aurora--1 { background: radial-gradient(circle, #ef705f 0%, transparent 70%); }
+    .qc-aurora--2 { background: radial-gradient(circle, #83b99a 0%, transparent 70%); opacity: 0.14; }
+    .qc-aurora--3 { background: radial-gradient(circle, #d59a3c 0%, transparent 72%); opacity: 0.09; }
+
+    .qc-header {
+      background: rgba(255, 248, 237, 0.86);
+      border-bottom-color: rgba(18, 59, 52, 0.12);
+      box-shadow: 0 8px 24px rgba(18, 59, 52, 0.04);
+    }
+    .qc-nav__logo { color: var(--qc-color-ink); }
+    .qc-nav__logo-img { filter: saturate(0.9); }
+    .qc-nav__wordmark { letter-spacing: -0.04em; }
+    .qc-nav__wordmark-sub { color: var(--qc-color-ink-dim); }
+    .qc-nav__link { color: var(--qc-color-ink-dim); position: relative; }
+    .qc-nav__link::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -0.45rem;
+      height: 2px; border-radius: 2px; background: var(--qc-color-accent);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.25s var(--qc-ease);
+    }
+    .qc-nav__link:hover::after, .qc-nav__link:focus-visible::after { transform: scaleX(1); }
+
+    .qc-button { box-shadow: 0 8px 18px rgba(18, 59, 52, 0.08); }
+    .qc-button:hover { box-shadow: 0 12px 25px rgba(18, 59, 52, 0.15); }
+    .qc-button--accent { background: var(--qc-color-accent); color: #fff8ed; }
+    .qc-button--gold { background: var(--qc-color-gold); color: #193b31; }
+    .qc-button--ghost { color: var(--qc-color-ink); border-color: rgba(18, 59, 52, 0.2); }
+    .qc-button--ghost:hover { background: rgba(239, 112, 95, 0.1); }
+
+    .qc-hero { min-height: min(48rem, 88svh); padding-top: 7rem; padding-bottom: 10rem; }
+    .qc-hero__video { background: linear-gradient(135deg, #244e42, #102f2b); }
+    .qc-hero__scrim {
+      background:
+        linear-gradient(to bottom, rgba(18, 59, 52, 0.28) 0%, rgba(18, 59, 52, 0.38) 45%, rgba(18, 59, 52, 0.96) 100%),
+        radial-gradient(90% 100% at 15% 80%, rgba(18, 59, 52, 0.78), transparent 68%);
+    }
+    .qc-hero__headline { color: #fff8ed; letter-spacing: -0.065em; max-width: 10ch; }
+    .qc-hero__lede { color: rgba(255, 248, 237, 0.8); }
+    .qc-hero__booking { background: rgba(255, 248, 237, 0.95); border-color: transparent; box-shadow: 0 20px 48px rgba(11, 42, 36, 0.2); }
+    .qc-booking__label { color: var(--qc-color-ink-dim); }
+    .qc-booking__input, .qc-form__input { background: #fffdf8; border-color: rgba(18, 59, 52, 0.17); color: var(--qc-color-ink); }
+
+    section { margin-block: clamp(5rem, 11vw, 9rem); }
+    .qc-section-kicker, .qc-story__stat dt, .qc-stay-card__tag, .qc-mission-card__code,
+    .qc-know-panel__title, .qc-enquire__backup-title { color: var(--qc-color-accent); }
+    .qc-section-title { letter-spacing: -0.06em; }
+    .qc-section-lede, .qc-story__para, .qc-stay-card__desc, .qc-mission-card__brief,
+    .qc-know-panel__note, .qc-enquire__backup p { color: var(--qc-color-ink-dim); }
+
+    .qc-glass { background: var(--qc-glass-bg); border-color: var(--qc-glass-border); box-shadow: var(--qc-glow); }
+    .qc-story__line::before { background: linear-gradient(to top, rgba(18, 59, 52, 0.08), var(--qc-color-accent), var(--qc-color-gold)); }
+    .qc-story__waypoint::before { background: var(--qc-color-base); border-color: rgba(18, 59, 52, 0.22); }
+    .qc-story__waypoint--active::before { background: var(--qc-color-accent); border-color: var(--qc-color-accent); box-shadow: 0 0 0 5px rgba(239, 112, 95, 0.17); }
+    .qc-story__waypoint--active { color: var(--qc-color-ink); }
+    .qc-story__waypoint--summit::before { border-color: rgba(213, 154, 60, 0.55); }
+    .qc-story__stats, .qc-stay-card__specs, .qc-mission-card__head, .qc-footer__bottom { border-top-color: rgba(18, 59, 52, 0.14); border-bottom-color: rgba(18, 59, 52, 0.14); }
+
+    .qc-stay-card, .qc-mission-card, .qc-know-panel, .qc-gallery__item { border-radius: var(--qc-radius); }
+    .qc-stay-card:hover, .qc-mission-card:hover, .qc-know-panel:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 18px 45px rgba(18, 59, 52, 0.14); }
+    .qc-stay-card__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(18, 59, 52, 0.27), transparent 45%); pointer-events: none; }
+    .qc-stay-card__cycle-hint { background: rgba(18, 59, 52, 0.72); border-color: rgba(255, 248, 237, 0.3); }
+    .qc-stay-card__specs dt, .qc-mission-card__stats dt { color: var(--qc-color-ink-dim); }
+    .qc-mission-card__stats dd, .qc-know-panel__value { color: var(--qc-color-accent); }
+    .qc-gallery__strip { scrollbar-color: rgba(239, 112, 95, 0.5) transparent; }
+    .qc-gallery__item { border-color: rgba(18, 59, 52, 0.14); }
+    .qc-form__input:focus-visible { border-color: var(--qc-color-accent); box-shadow: 0 0 0 3px rgba(239, 112, 95, 0.18); }
+    .qc-form__status--success { background: rgba(116, 176, 132, 0.14); border-color: rgba(64, 124, 82, 0.4); color: #2c7242; }
+    .qc-form__status--error { background: rgba(239, 112, 95, 0.12); border-color: rgba(239, 112, 95, 0.45); color: #b84b3f; }
+    .qc-footer { background: linear-gradient(to bottom, transparent, rgba(18, 59, 52, 0.05)); border-top-color: rgba(18, 59, 52, 0.14); }
+    .qc-footer__tag, .qc-footer__legal, .qc-footer__links { color: var(--qc-color-ink-dim); }
+
+    @media (max-width: 768px) {
+      .qc-header { padding-inline: 1rem; }
+      .qc-nav__menu { background: rgba(255, 248, 237, 0.98); border-color: rgba(18, 59, 52, 0.14); box-shadow: 0 24px 64px rgba(18, 59, 52, 0.15); }
+      .qc-nav__toggle { border-color: rgba(18, 59, 52, 0.16); }
+      .qc-nav__toggle-bar, .qc-nav__toggle-bar::before, .qc-nav__toggle-bar::after { background: var(--qc-color-accent); }
+      .qc-nav__toggle[aria-expanded='true'] .qc-nav__toggle-bar { background: transparent; }
+      .qc-hero { min-height: 44rem; padding-top: 6rem; }
+      .qc-hero__headline { max-width: 9ch; }
+      .qc-hero__booking { padding: 1rem; }
+      .qc-booking__submit { width: 100%; justify-content: center; }
+      .qc-stay-card:hover, .qc-mission-card:hover, .qc-know-panel:hover { transform: translateY(-3px); }
+    }
+
+
+  </style>
+
+</head>
+
+<body>
+  <!-- Fixed ambient aurora blobs (purely decorative) -->
+  <div class="qc-aurora qc-aurora--1" aria-hidden="true"></div>
+  <div class="qc-aurora qc-aurora--2" aria-hidden="true"></div>
+  <div class="qc-aurora qc-aurora--3" aria-hidden="true"></div>
+
+  <a class="qc-skip-link" href="#main">Skip to main content</a>
+
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <header class="qc-header">
+    <nav class="qc-nav" aria-label="Primary navigation">
+      <a href="#hero" class="qc-nav__logo" aria-label="Lantana Homestay Cabins — home">
+        
+        <img src="assets/img/lantana-logo.svg" alt="Lantana Homestay Cabins logo" class="qc-nav__logo-img" width="40" height="40" onerror="this.hidden=true" />
+        <span class="qc-nav__wordmark">Lantana<span class="qc-nav__wordmark-sub">Homestay Cabins</span></span>
+      </a>
+      <button class="qc-nav__toggle" aria-expanded="false" aria-controls="qc-nav-menu" aria-label="Open menu">
+        <span class="qc-nav__toggle-bar" aria-hidden="true"></span>
+      </button>
+      <ul id="qc-nav-menu" class="qc-nav__menu">
+        <li><a class="qc-nav__link" href="#stays">The Stays</a></li>
+        <li><a class="qc-nav__link" href="#gallery">Gallery</a></li>
+        <li><a class="qc-nav__link" href="#expeditions">Expeditions</a></li>
+        <li><a class="qc-nav__link" href="#good-to-know">Good to Know</a></li>
+        <li><a class="qc-button qc-button--accent qc-nav__cta" href="#enquire">Enquire</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ================= 1. HERO ================= -->
+    <section id="hero" class="qc-hero" aria-label="Welcome">
+      <video class="qc-hero__video" autoplay muted loop playsinline poster="" aria-hidden="true" tabindex="-1">
+        <!-- assets/videos/hero-loop.mp4 -->
+        <source src="" type="video/mp4" />
+      </video>
+      <div class="qc-hero__scrim" aria-hidden="true"></div>
+
+      <div class="qc-hero__content">
+        <p class="qc-hero__kicker">Naromoru · Mount Kenya Foothills · 1,950 m</p>
+        <h1 class="qc-hero__headline">The quiet side<br />of the mountain.</h1>
+        <p class="qc-hero__lede">
+          Private cabin stays wrapped in fresh air and lush greenery.
+        </p>
+      </div>
+
+      <!-- Glass booking-enquiry bar -->
+      <form class="qc-hero__booking qc-glass" action="#enquire" method="get"
+        aria-label="Availability enquiry shortcut">
+        <div class="qc-booking__field">
+          <label class="qc-booking__label" for="qcheckin">Check-in</label>
+          <input class="qc-booking__input" type="date" id="qcheckin" name="check_in" required />
+        </div>
+        <div class="qc-booking__field">
+          <label class="qc-booking__label" for="qcheckout">Check-out</label>
+          <input class="qc-booking__input" type="date" id="qcheckout" name="check_out" required />
+        </div>
+        <div class="qc-booking__field">
+          <label class="qc-booking__label" for="qguests">Guests</label>
+          <input class="qc-booking__input" type="number" id="qguests" name="guests" min="1" max="10" value="2" required />
+        </div>
+        <a class="qc-button qc-button--gold qc-booking__submit" href="#enquire" role="button"
+          aria-label="Continue to enquiry form">
+          Begin ascent <span class="qc-button__arrow" aria-hidden="true">→</span>
+        </a>
+      </form>
+    </section>
+
+    <!-- ================= 2. ALTITUDE TIMELINE INTRO ================= -->
+    <section id="story" class="qc-story" aria-labelledby="story-heading">
+      <div class="qc-story__track" aria-hidden="true">
+        <div class="qc-story__line">
+          <span class="qc-story__waypoint qc-story__waypoint--base">
+            <span class="qc-story__alt">0 m</span> Sea level
+          </span>
+          <span class="qc-story__waypoint qc-story__waypoint--mid qc-story__waypoint--active">
+            <span class="qc-story__alt">1,950 m</span> The foothills — you are here
+          </span>
+          <span class="qc-story__waypoint qc-story__waypoint--summit">
+            <span class="qc-story__alt">5,199 m</span> Batian, Mt Kenya summit
+          </span>
+        </div>
+      </div>
+
+      <div class="qc-story__copy">
+        <p class="qc-section-kicker">The story</p>
+        <h2 id="story-heading" class="qc-section-title">Named for a flower.<br />Built for stillness.</h2>
+        <p class="qc-story__para">
+          Inspired by the colourful Lantana camara that flourishes across these slopes,
+          Lantana Homestay Cabins celebrates the beauty and charm of its natural surroundings.
+        </p>
+        <p class="qc-story__para">
+          A peaceful homestay near the foothills of Mount Kenya in Naromoru, pairing comfortable
+          private accommodation with warm hospitality, home-style dining, and easy access to
+          guided nature excursions.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= 3. THE STAYS ================= -->
+    <section id="stays" class="qc-stays" aria-labelledby="stays-heading">
+      <p class="qc-section-kicker">Accommodation</p>
+      <h2 id="stays-heading" class="qc-section-title">The Stays</h2>
+      <p class="qc-section-lede">
+        Three ways to arrive: two intimate units for couples, and the self-catering
+        Cottage for families and friend groups.
+      </p>
+
+      <ul class="qc-stays__grid">
+
+        <li class="qc-stay-card qc-glass qc-stay-card--wide">
+          <div class="qc-stay-card__media" data-photo-cycle="unit1" tabindex="0" role="group"
+            aria-roledescription="image carousel"
+            aria-label="Photos of Unit 1 — press Enter or tap to cycle photos">
+            <!-- assets/img/unit1-1.jpg -->
+            <img class="qc-stay-card__photo is-active" src="assets/img/9.png" alt="Unit 1 interior at Lantana Homestay Cabins" loading="lazy" width="800" height="1000" />
+            <!-- assets/img/unit1-2.jpg -->
+            <img class="qc-stay-card__photo" src="assets/img/2.png" alt="Unit 1 bedroom detail" loading="lazy" width="800" height="1000" hidden />
+            <!-- assets/img/unit1-3.jpg -->
+            <img class="qc-stay-card__photo" src="assets/img/7.png" alt="View of greenery from Unit 1" loading="lazy" width="800" height="1000" hidden />
+            <p class="qc-stay-card__cycle-hint" aria-hidden="true">Hover / tap to cycle</p>
+          </div>
+          <div class="qc-stay-card__body">
+            <h3 class="qc-stay-card__name">Unit 1</h3>
+            <p class="qc-stay-card__tag">Couples · private getaway</p>
+            <p class="qc-stay-card__desc">
+              A cozy private cabin surrounded by fresh air and lush greenery, with warm
+              hospitality and home-style dining available during your stay.
+              Check-in 12pm · check-out 10am.
+            </p>
+            <dl class="qc-stay-card__specs">
+              <div><dt>Sleeps</dt><dd>[capacity — confirm]</dd></div>
+              <div><dt>Type</dt><dd>Private unit</dd></div>
+              <div><dt>Dining</dt><dd>Home-style available</dd></div>
+            </dl>
+          </div>
+        </li>
+
+        <li class="qc-stay-card qc-glass">
+          <div class="qc-stay-card__media" data-photo-cycle="unit2" tabindex="0" role="group"
+            aria-roledescription="image carousel"
+            aria-label="Photos of Unit 2 — press Enter or tap to cycle photos">
+            <!-- assets/img/unit2-1.jpg -->
+            <img class="qc-stay-card__photo is-active" src="assets/img/1.png" alt="Unit 2 exterior at Lantana Homestay Cabins" loading="lazy" width="800" height="1000" />
+            <!-- assets/img/unit2-2.jpg -->
+            <img class="qc-stay-card__photo" src="assets/img/3.png" alt="Unit 2 bedroom detail" loading="lazy" width="800" height="1000" hidden />
+            <!-- assets/img/unit2-3.jpg -->
+            <img class="qc-stay-card__photo" src="assets/img/4.png" alt="Garden view from Unit 2" loading="lazy" width="800" height="1000" hidden />
+            <p class="qc-stay-card__cycle-hint" aria-hidden="true">Hover / tap to cycle</p>
+          </div>
+          <div class="qc-stay-card__body">
+            <h3 class="qc-stay-card__name">Unit 2</h3>
+            <p class="qc-stay-card__tag">Couples · private getaway</p>
+            <p class="qc-stay-card__desc">
+              Same calm, different corner of the property. A quiet cabin for two,
+              steps away from guided nature excursions into the foothills.
+            </p>
+            <dl class="qc-stay-card__specs">
+              <div><dt>Sleeps</dt><dd>[capacity — confirm]</dd></div>
+              <div><dt>Type</dt><dd>Private unit</dd></div>
+              <div><dt>Dining</dt><dd>Home-style available</dd></div>
+            </dl>
+          </div>
+        </li>
+
+        <li class="qc-stay-card qc-glass qc-stay-card--tall">
+          <div class="qc-stay-card__media" data-photo-cycle="cottage" tabindex="0" role="group"
+            aria-roledescription="image carousel"
+            aria-label="Photos of the Cottage — press Enter or tap to cycle photos">
+            <!-- assets/img/cottage-1.jpg -->
+            <img class="qc-stay-card__photo is-active" src="assets/img/1.png" alt="The Cottage at Lantana Homestay Cabins" loading="lazy" width="800" height="1000" />
+            <!-- assets/img/cottage-2.jpg -->
+            <img class="qc-stay-card__photo" src="assets/img/3.png" alt="Cottage living space" loading="lazy" width="800" height="1000" hidden />
+            <!-- assets/img/cottage-3.jpg -->
+            <img class="qc-stay-card__photo" src="assets/img/4.png" alt="Cottage kitchen, self-catering facilities" loading="lazy" width="800" height="1000" hidden />
+            <p class="qc-stay-card__cycle-hint" aria-hidden="true">Hover / tap to cycle</p>
+          </div>
+          <div class="qc-stay-card__body">
+            <h3 class="qc-stay-card__name">The Cottage</h3>
+            <p class="qc-stay-card__tag">Families &amp; friends · self-catering</p>
+            <p class="qc-stay-card__desc">
+              Your own place on the slope. Bring your people, cook together in the fully
+              equipped kitchen, and let the evenings stretch long under mountain air.
+            </p>
+            <dl class="qc-stay-card__specs">
+              <div><dt>Sleeps</dt><dd>Up to 6</dd></div>
+              <div><dt>Type</dt><dd>Whole cottage</dd></div>
+              <div><dt>Dining</dt><dd>Self-catering kitchen</dd></div>
+            </dl>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ================= 4. GALLERY — horizontal filmstrip ================= -->
+    <section id="gallery" class="qc-gallery" aria-labelledby="gallery-heading">
+      <div class="qc-gallery__head">
+        <div>
+          <p class="qc-section-kicker">Field notes</p>
+          <h2 id="gallery-heading" class="qc-section-title">From the ground</h2>
+        </div>
+        <p class="qc-gallery__hint" aria-hidden="true">Drag / scroll →</p>
+      </div>
+
+      <ul class="qc-gallery__strip" tabindex="0" role="region"
+        aria-label="Photo gallery — scroll horizontally" data-filmstrip>
+        <!-- Each item: landscape photo; final filenames confirmed at asset pass -->
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-1.jpg -->
+          <img src="assets/img/landscape/1.png" alt="Green lawns and gardens surrounding Lantana Homestay Cabins" loading="lazy" width="900" height="600" />
+        </li>
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-2.jpg -->
+          <img src="assets/img/landscape/2.png" alt="Lush greenery and trees on the property at Naromoru" loading="lazy" width="900" height="600" />
+        </li>
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-3.jpg -->
+          <img src="assets/img/landscape/3.png" alt="View towards the foothills of Mount Kenya from the property" loading="lazy" width="900" height="600" />
+        </li>
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-4.jpg -->
+          <img src="assets/img/landscape/4.png" alt="Cabin exterior nestled in greenery at Lantana Homestay Cabins" loading="lazy" width="900" height="600" />
+        </li>
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-5.jpg -->
+          <img src="assets/img/landscape/5.png" alt="Morning light over the grounds of Lantana Homestay Cabins" loading="lazy" width="900" height="600" />
+        </li>
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-6.jpg -->
+          <img src="assets/img/landscape/6.png" alt="Path through the gardens at Lantana Homestay Cabins, Naromoru" loading="lazy" width="900" height="600" />
+        </li>
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-7.jpg -->
+          <img src="assets/img/landscape/7.png" alt="Distant view of Mount Kenya from near Naromoru" loading="lazy" width="900" height="600" />
+        </li>
+        <li class="qc-gallery__item">
+          <!-- assets/img/landscape-8.jpg -->
+          <img src="assets/img/landscape/8.png" alt="Evening sky above the cabins at Lantana Homestay Cabins" loading="lazy" width="900" height="600" />
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= 5. EXPEDITIONS & PACKAGES — mission cards ================= -->
+    <section id="expeditions" class="qc-expeditions" aria-labelledby="expeditions-heading">
+      <p class="qc-section-kicker">Expeditions</p>
+      <h2 id="expeditions-heading" class="qc-section-title">Mission briefings</h2>
+      <p class="qc-section-lede">
+        Multi-day Mount Kenya excursions and curated stays, briefed like expeditions.
+        All packages depart from Naromoru; exclusions on request.
+      </p>
+
+      <ul class="qc-missions__grid">
+
+        <li class="qc-mission-card qc-glass">
+          <article>
+            <header class="qc-mission-card__head">
+              <span class="qc-mission-card__code">MSN·001</span>
+              <h3 class="qc-mission-card__name">05 Days &amp; 04 Nights on the slopes of Mt. Kenya</h3>
+            </header>
+            <p class="qc-mission-card__brief">
+              A serene Mount Kenya escape with guided forest hikes, rhino encounters at Solio Ranch,
+              and nature experiences in Ngare Ndare Forest. It features lunch at the Trout Tree
+              Restaurant and includes the #hugatree challenge.
+            </p>
+            <dl class="qc-mission-card__stats">
+              <div><dt>Duration</dt><dd>05 days</dd></div>
+              <div><dt>Guests</dt><dd>Flexible</dd></div>
+              <div><dt>Difficulty</dt><dd>Moderate</dd></div>
+            </dl>
+            <p class="qc-mission-card__note">
+              Includes Nairobi transfers, guided hikes, park fees, meals, and activities.
+            </p>
+            <a class="qc-button qc-button--ghost" href="#enquire"
+              aria-label="Enquire about this expedition">Request briefing</a>
+          </article>
+        </li>
+
+        <li class="qc-mission-card qc-glass">
+          <article>
+            <header class="qc-mission-card__head">
+              <span class="qc-mission-card__code">MSN·002</span>
+              <h3 class="qc-mission-card__name">Mt. Kenya Weekend Getaway (04 Days &amp; 03 Nights)</h3>
+            </header>
+            <p class="qc-mission-card__brief">
+              A scenic long-weekend escape featuring a cabin stay, Nyama Choma under the stars,
+              exploration of Ngare Ndare’s blue pools and ancient forest, and a guided Mount Kenya hike.
+            </p>
+            <dl class="qc-mission-card__stats">
+              <div><dt>Duration</dt><dd>04 days</dd></div>
+              <div><dt>Guests</dt><dd>Flexible</dd></div>
+              <div><dt>Difficulty</dt><dd>Moderate</dd></div>
+            </dl>
+            <p class="qc-mission-card__note">
+              Includes pickup from Nairobi, cabin stay, park fees, meals, and guided activities.
+            </p>
+            <a class="qc-button qc-button--ghost" href="#enquire"
+              aria-label="Enquire about this expedition">Request briefing</a>
+          </article>
+        </li>
+
+      </ul>
+      <p class="qc-expeditions__footnote">
+        Trade / travel-agent partners: agent-facing property information available on request.
+      </p>
+    </section>
+
+    <!-- ================= 6. GOOD TO KNOW — policy panels ================= -->
+    <section id="good-to-know" class="qc-know" aria-labelledby="know-heading">
+      <p class="qc-section-kicker">Field manual</p>
+      <h2 id="know-heading" class="qc-section-title">Good to know</h2>
+
+      <ul class="qc-know__grid">
+        <li class="qc-know-panel qc-glass">
+          <h3 class="qc-know-panel__title">Check-in</h3>
+          <p class="qc-know-panel__value">12:00 pm</p>
+          <p class="qc-know-panel__note">Units 1 &amp; 2 · confirm Cottage times on enquiry.</p>
+        </li>
+        <li class="qc-know-panel qc-glass">
+          <h3 class="qc-know-panel__title">Check-out</h3>
+          <p class="qc-know-panel__value">10:00 am</p>
+          <p class="qc-know-panel__note">Late departure available on request.</p>
+        </li>
+        <li class="qc-know-panel qc-glass">
+          <h3 class="qc-know-panel__title">House rules</h3>
+          <p class="qc-know-panel__note">
+            Full house rules for each unit shared on confirmation.
+            <!-- TODO: paste exact house rules when provided (Unit 2 & Cottage rules outstanding) -->
+          </p>
+        </li>
+        <li class="qc-know-panel qc-glass">
+          <h3 class="qc-know-panel__title">Self-catering</h3>
+          <p class="qc-know-panel__note">
+            The Cottage includes full self-catering facilities. Units 1 &amp; 2 offer
+            home-style dining — details shared on booking.
+            <!-- TODO: paste exact catering/dining notes when provided -->
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= 7. CONTACT / ENQUIRE — Formspree ================= -->
+    <section id="enquire" class="qc-enquire" aria-labelledby="enquire-heading">
+      <p class="qc-section-kicker">Transmission</p>
+      <h2 id="enquire-heading" class="qc-section-title">Begin your approach</h2>
+      <p class="qc-section-lede">
+        Tell us your dates and party size. We reply by email — usually within a day.
+      </p>
+
+      <form class="qc-form qc-glass" method="POST"
+        action="https://formspree.io/f/xjyvbojd">
+        <div class="qc-form__row">
+          <div class="qc-form__field">
+            <label class="qc-form__label" for="f-name">Name <abbr title="required" aria-label="required">*</abbr></label>
+            <input class="qc-form__input" type="text" id="f-name" name="name" autocomplete="name" required minlength="2" />
+          </div>
+          <div class="qc-form__field">
+            <label class="qc-form__label" for="f-email">Email <abbr title="required" aria-label="required">*</abbr></label>
+            <input class="qc-form__input" type="email" id="f-email" name="email" autocomplete="email" required />
+          </div>
+        </div>
+
+        <div class="qc-form__row">
+          <div class="qc-form__field">
+            <label class="qc-form__label" for="f-checkin">Check-in <abbr title="required" aria-label="required">*</abbr></label>
+            <input class="qc-form__input" type="date" id="f-checkin" name="check_in" required />
+          </div>
+          <div class="qc-form__field">
+            <label class="qc-form__label" for="f-checkout">Check-out <abbr title="required" aria-label="required">*</abbr></label>
+            <input class="qc-form__input" type="date" id="f-checkout" name="check_out" required />
+          </div>
+          <div class="qc-form__field">
+            <label class="qc-form__label" for="f-guests">Guests <abbr title="required" aria-label="required">*</abbr></label>
+            <input class="qc-form__input" type="number" id="f-guests" name="guests" min="1" max="10" value="2" required />
+          </div>
+        </div>
+
+        <div class="qc-form__field">
+          <label class="qc-form__label" for="f-message">Message</label>
+          <textarea class="qc-form__input qc-form__textarea" id="f-message" name="message" rows="5"
+            placeholder="Anything we should know — occasion, dietary needs, interests…"></textarea>
+        </div>
+
+        <button class="qc-button qc-button--accent qc-form__submit" type="submit">
+          Send transmission <span class="qc-button__arrow" aria-hidden="true">→</span>
+        </button>
+
+        <!-- Hidden success / error state containers, shown by JS after POST -->
+        <p class="qc-form__status qc-form__status--success" role="status" aria-live="polite" hidden>
+          Message received. We'll be in touch by email shortly.
+        </p>
+        <p class="qc-form__status qc-form__status--error" role="alert" aria-live="assertive" hidden>
+          Something went wrong sending your message. Please email us directly instead.
+        </p>
+      </form>
+
+      <div class="qc-enquire__backup qc-glass">
+        <h3 class="qc-enquire__backup-title">Prefer direct?</h3>
+        <p>Reach us directly:</p>
+        <p class="qc-enquire__email-wrap">
+          <a class="qc-enquire__email" href="mailto:sales@zilkotravel.co.ke" id="qc-contact-email">sales@zilkotravel.co.ke</a>
+          <button class="qc-copy-btn" type="button"
+            aria-label="Copy contact email address to clipboard"
+            data-copy-target="#qc-contact-email">Copy</button>
+        </p>
+        <p class="qc-enquire__meta"><strong>Phone:</strong> +254 20 200 8900</p>
+        <p class="qc-enquire__meta"><strong>Website:</strong>
+          <a href="https://www.zilkotravel.co.ke" target="_blank" rel="noreferrer">www.zilkotravel.co.ke</a>
+        </p>
+        <p class="qc-enquire__location">Naromoru, Nyeri County, Kenya — near the Naro Moru route gate.</p>
+      </div>
+    </section>
+
+  <!-- ================= 8. FOOTER ================= -->
+  <footer class="qc-footer">
+    <div class="qc-footer__top">
+      <p class="qc-footer__brand">
+        <!-- assets/img/lantana-logo.svg -->
+        <img class="qc-footer__logo" src="" alt="Lantana Homestay Cabins logo" width="32" height="32" onerror="this.hidden=true" />
+        Lantana Homestay Cabins
+      </p>
+      <p class="qc-footer__tag">The quiet side of the mountain.</p>
+    </div>
+    <div class="qc-footer__bottom">
+      <nav class="qc-footer__links" aria-label="Footer">
+        <a href="#" class="qc-footer__link">Terms &amp; Conditions</a>
+        <span class="qc-footer__socials">
+          Instagram <span class="qc-footer__soon">coming soon</span> ·
+          Facebook <span class="qc-footer__soon">coming soon</span>
+        </span>
+      </nav>
+      <p class="qc-footer__legal">© <span id="qc-year">2026</span> Lantana Homestay Cabins. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Embedded photo-cycle order data (Pass 4, section 2).
+       Keys match data-photo-cycle values; arrays are ordered by final asset
+       filenames (placeholders until the asset pass fills src attributes). -->
+  <script type="application/json" id="qc-photo-data">
+    {
+      "unit1": [
+        "assets/img/unit1-1.jpg",
+        "assets/img/unit1-2.jpg",
+        "assets/img/unit1-3.jpg"
+      ],
+      "unit2": [
+        "assets/img/unit2-1.jpg",
+        "assets/img/unit2-2.jpg",
+        "assets/img/unit2-3.jpg"
+      ],
+      "cottage": [
+        "assets/img/cottage-1.jpg",
+        "assets/img/cottage-2.jpg",
+        "assets/img/cottage-3.jpg"
+      ]
+    }
+  </script>
+
+  <!-- ================= PASS 4: JavaScript ================= -->
+
+  <script>
+    /* ==========================================================
+       LANTANA HOMESTAY CABINS — Pass 4: JS
+       Vanilla ES2019+, IIFE scope, no globals.
+       All features respect prefers-reduced-motion.
+       ========================================================== */
+    (function () {
+      'use strict';
+
+      var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var $  = function (sel, root) { return (root || document).querySelector(sel); };
+      var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+      /* ----------------------------------------------------------
+         1. SCROLL REVEALS
+         Add .reveal progressively, then IntersectionObserver adds
+         .reveal-visible at ~15% visibility. Skipped entirely under
+         reduced motion (elements stay fully visible by default).
+         ---------------------------------------------------------- */
+      function initReveals() {
+        var targets = $$('.qc-hero__content, .qc-hero__booking, .qc-story__copy,' +
+          ' .qc-stay-card, .qc-gallery__item, .qc-mission-card, .qc-know-panel,' +
+          ' .qc-form, .qc-enquire__backup');
+        if (!targets.length) return;
+
+        // Respect reduced motion: never hide anything, skip observing.
+        if (REDUCED || !('IntersectionObserver' in window)) return;
+
+        targets.forEach(function (el) {
+          el.classList.add('reveal');
+          // Stagger siblings slightly using an inline custom property
+          el.style.setProperty('--qc-reveal-delay', ((targets.indexOf(el) % 4) * 0.08).toFixed(2) + 's');
+        });
+
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+
+        targets.forEach(function (el) { io.observe(el); });
+      }
+
+      /* ----------------------------------------------------------
+         2. UNIT CARD PHOTO CYCLING
+         Image list read from JSON embedded in a single
+         <script type="application/json" id="qc-photo-data">.
+         Hover advances on first enter + auto-cycles every 4s;
+         tap / Enter key also advances (touch & keyboard support).
+         ---------------------------------------------------------- */
+      function initPhotoCycling() {
+        var dataEl = $('#qc-photo-data');
+        var cycleMap = {};
+        if (dataEl) {
+          try { cycleMap = JSON.parse(dataEl.textContent); } catch (e) { cycleMap = {}; }
+        }
+
+        $$('.qc-stay-card__media[data-photo-cycle]').forEach(function (media) {
+          var photos = $$('img.qc-stay-card__photo', media);
+          var key = media.getAttribute('data-photo-cycle');
+          // Allow an external order via JSON; otherwise use DOM order.
+          // Skip ordering while src attributes are placeholders (empty).
+          var order = (cycleMap[key] || []).filter(Boolean);
+          if (order.length && photos.every(function (p) { return p.getAttribute('src'); })) {
+            photos.sort(function (a, b) {
+              return order.indexOf(a.getAttribute('src')) - order.indexOf(b.getAttribute('src'));
+            });
+          }
+          if (photos.length < 2) return;
+
+          var index = 0;
+          var timer = null;
+
+          function show(i) {
+            index = (i + photos.length) % photos.length;
+            photos.forEach(function (p, n) {
+              p.classList.toggle('is-active', n === index);
+              p.hidden = n !== index;
+            });
+          }
+          function startAuto() {
+            stopAuto();
+            timer = setInterval(function () { show(index + 1); }, 4000);
+          }
+          function stopAuto() {
+            if (timer) { clearInterval(timer); timer = null; }
+          }
+
+          media.addEventListener('mouseenter', function () { show(index + 1); startAuto(); });
+          media.addEventListener('mouseleave', stopAuto);
+          media.addEventListener('focus', startAuto);
+          media.addEventListener('blur', stopAuto);
+
+          // Tap / keyboard advance
+          media.addEventListener('click', function () { show(index + 1); });
+          media.addEventListener('keydown', function (ev) {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              show(index + 1);
+            }
+          });
+        });
+      }
+
+      /* ----------------------------------------------------------
+         3. GALLERY DRAG-TO-SCROLL
+         Pointer events convert horizontal drag into scrollLeft.
+         Scroll-snap is disabled while dragging (class toggle) and
+         re-enabled on release. Momentum via velocity decay on rAF.
+         ---------------------------------------------------------- */
+      function initFilmstrip() {
+        var strip = $('[data-filmstrip]');
+        if (!strip) return;
+
+        var isDown = false, startX = 0, startScroll = 0;
+        var lastX = 0, lastT = 0, velocity = 0;
+        var momentumId = null;
+
+        function stopMomentum() {
+          if (momentumId) { cancelAnimationFrame(momentumId); momentumId = null; }
+        }
+
+        function momentum() {
+          // Decay velocity ~12% per frame; stop under a pixel threshold.
+          if (Math.abs(velocity) < 0.4 || REDUCED) { momentumId = null; return; }
+          strip.scrollLeft -= velocity * 16; // px per frame
+          velocity *= 0.88;
+          momentumId = requestAnimationFrame(momentum);
+        }
+
+        strip.addEventListener('pointerdown', function (ev) {
+          // Only primary button / touch; don't hijack link or text selection.
+          if (!ev.isPrimary || ev.button !== 0) return;
+          isDown = true;
+          stopMomentum();
+          startX = lastX = ev.clientX;
+          startScroll = strip.scrollLeft;
+          lastT = performance.now();
+          velocity = 0;
+          strip.classList.add('is-dragging');
+          strip.setPointerCapture(ev.pointerId);
+        });
+
+        strip.addEventListener('pointermove', function (ev) {
+          if (!isDown || !ev.isPrimary) return;
+          var now = performance.now();
+          var dx = ev.clientX - startX;
+          strip.scrollLeft = startScroll - dx;
+          // Track velocity in px/ms for release momentum
+          velocity = (ev.clientX - lastX) / Math.max(now - lastT, 1);
+          lastX = ev.clientX;
+          lastT = now;
+        });
+
+        function endDrag() {
+          if (!isDown) return;
+          isDown = false;
+          strip.classList.remove('is-dragging'); // re-enables CSS snap
+          momentum(); // glide out
+        }
+        strip.addEventListener('pointerup', endDrag);
+        strip.addEventListener('pointercancel', endDrag);
+
+        // Prevent click-through after a real drag
+        strip.addEventListener('click', function (ev) {
+          if (Math.abs(ev.clientX - startX) > 6) ev.preventDefault();
+        }, true);
+      }
+
+      /* ----------------------------------------------------------
+         4. PARALLAX HERO
+         rAF-throttled; video translates up to ~120px on scroll.
+         Capped, uses transform only (compositor-friendly).
+         Skipped under reduced motion.
+         ---------------------------------------------------------- */
+      function initParallax() {
+        if (REDUCED) return;
+        var video = $('.qc-hero__video');
+        var hero = $('#hero');
+        if (!video || !hero) return;
+
+        var ticking = false;
+        function update() {
+          ticking = false;
+          // Cap so work stops once hero has scrolled past.
+          if (window.scrollY > window.innerHeight * 1.2) return;
+          video.style.transform = 'translate3d(0,' + Math.min(window.scrollY * 0.25, 120) + 'px,0)';
+        }
+        window.addEventListener('scroll', function () {
+          if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }, { passive: true });
+      }
+
+      /* ----------------------------------------------------------
+         5. ENQUIRY FORM — fetch POST to Formspree
+         Native validation runs first via checkValidity().
+         Success/error shown in the designated containers;
+         mailto fallback constructed on total fetch failure.
+         ---------------------------------------------------------- */
+      function initForm() {
+        var form = $('.qc-form');
+        if (!form) return;
+
+        var okEl = $('.qc-form__status--success', form);
+        var errEl = $('.qc-form__status--error', form);
+        var ENDPOINT = form.getAttribute('action');
+
+        function showStatus(el) {
+          [okEl, errEl].forEach(function (n) { if (n) n.hidden = true; });
+          if (el) el.hidden = false;
+        }
+
+        function mailtoFallback(data) {
+          // Pull the visible backup email from the page's contact link.
+          var link = $('.qc-enquire__email');
+          var to = (link && !/^\[/.test(link.textContent.trim()))
+            ? link.textContent.trim()
+            : 'sales@zilkotravel.co.ke';
+          var body = encodeURIComponent(
+            'Name: ' + data.get('name') +
+            '\nCheck-in: ' + data.get('check_in') +
+            '\nCheck-out: ' + data.get('check_out') +
+            '\nGuests: ' + data.get('guests') +
+            '\n\n' + data.get('message')
+          );
+          window.location.href =
+            'mailto:' + to +
+            '?subject=' + encodeURIComponent('Lantana cabin enquiry') +
+            '&body=' + body;
+        }
+
+        form.addEventListener('submit', function (ev) {
+          ev.preventDefault();
+          showStatus(null);
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          var submitBtn = $('[type="submit"]', form);
+          if (submitBtn) submitBtn.disabled = true;
+
+          fetch(ENDPOINT, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' }
+          })
+            .then(function (res) {
+              if (res.ok) {
+                form.reset();
+                showStatus(okEl);
+              } else {
+                showStatus(errEl);
+              }
+            })
+            .catch(function () {
+              // Network unreachable etc. → hand off to the user's mail client
+              showStatus(errEl);
+              mailtoFallback(new FormData(form));
+            })
+            .finally(function () {
+              if (submitBtn) submitBtn.disabled = false;
+            });
+        });
+      }
+
+      /* ----------------------------------------------------------
+         6. ALTITUDE PROGRESS LINE
+         Fill height tracks overall scroll progress through the
+         document (rAF-throttled, passive listener).
+         ---------------------------------------------------------- */
+      function initAltitudeProgress() {
+        var line = $('.qc-story__line');
+        if (!line || REDUCED) return;
+
+        var ticking = false;
+        function update() {
+          ticking = false;
+          var max = document.documentElement.scrollHeight - window.innerHeight;
+          var progress = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+          line.style.setProperty('--qc-altitude-progress', progress.toFixed(4));
+        }
+        window.addEventListener('scroll', function () {
+          if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }, { passive: true });
+        update();
+      }
+
+      /* ----------------------------------------------------------
+         7. SMALL UTILITIES
+         Mobile nav toggle, email copy button, footer year,
+         hero video autoplay guard (reduced-motion: stay paused).
+         ---------------------------------------------------------- */
+      function initNavToggle() {
+        var toggle = $('.qc-nav__toggle');
+        var menu = $('#qc-nav-menu');
+        if (!toggle || !menu) return;
+        toggle.addEventListener('click', function () {
+          var open = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!open));
+          toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+          menu.classList.toggle('is-open', !open);
+        });
+        // Close when a link inside is chosen, or with Escape
+        menu.addEventListener('click', function (ev) {
+          if (ev.target.closest('a')) {
+            toggle.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('is-open');
+          }
+        });
+        document.addEventListener('keydown', function (ev) {
+          if (ev.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+            toggle.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('is-open');
+            toggle.focus();
+          }
+        });
+      }
+
+      // Gallery keyboard support: Left/Right arrows scroll the focused strip
+      function initGalleryKeys() {
+        var strip = $('[data-filmstrip]');
+        if (!strip) return;
+        strip.addEventListener('keydown', function (ev) {
+          var step = Math.round(strip.clientWidth * 0.7);
+          if (ev.key === 'ArrowRight') { ev.preventDefault(); strip.scrollBy({ left: step, behavior: REDUCED ? 'auto' : 'smooth' }); }
+          if (ev.key === 'ArrowLeft')  { ev.preventDefault(); strip.scrollBy({ left: -step, behavior: REDUCED ? 'auto' : 'smooth' }); }
+        });
+      }
+
+      function initCopyButton() {
+        $$('.qc-copy-btn[data-copy-target]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var text = ($(btn.getAttribute('data-copy-target')) || {}).textContent;
+            if (!text) return;
+            function done() {
+              var old = btn.textContent;
+              btn.textContent = 'Copied';
+              setTimeout(function () { btn.textContent = old; }, 1600);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text.trim()).then(done);
+            } else {
+              // Legacy fallback: temporary textarea + execCommand
+              var ta = document.createElement('textarea');
+              ta.value = text.trim();
+              ta.setAttribute('readonly', '');
+              ta.style.position = 'absolute';
+              ta.style.left = '-9999px';
+              document.body.appendChild(ta);
+              ta.select();
+              try { document.execCommand('copy'); done(); } catch (e) { /* noop */ }
+              document.body.removeChild(ta);
+            }
+          });
+        });
+      }
+
+      function initMisc() {
+        var year = $('#qc-year');
+        if (year) year.textContent = String(new Date().getFullYear());
+
+        // Reduced motion users shouldn't get background motion from the hero video.
+        if (REDUCED) {
+          $$('.qc-hero__video').forEach(function (v) { v.pause(); v.removeAttribute('autoplay'); });
+        }
+      }
+
+      /* ----------------------------------------------------------
+         BOOT
+         ---------------------------------------------------------- */
+      initReveals();
+      initPhotoCycling();
+      initFilmstrip();
+      initParallax();
+      initForm();
+      initAltitudeProgress();
+      initNavToggle();
+      initGalleryKeys();
+      initCopyButton();
+      initMisc();
+
+
+
+
+    })();
+  </script>
+
+
+  </main>
+</body>
+</html>
